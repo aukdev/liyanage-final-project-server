@@ -11,7 +11,7 @@ const movieSchema = new Schema(
     description: {
       type: String,
     },
-    // saved book id from API
+    // saved movie id from API
     movieId: {
       type: String,
     },

@@ -3,8 +3,8 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
 /// demo data
-const movies = require("../demoData/movies.js");
-const comments = require("../demoData/comments.js");
+// const movies = require("../demoData/movies.js");
+// const comments = require("../demoData/comments.js");
 
 const resolvers = {
   Query: {
@@ -86,6 +86,16 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+
+    addMovieComment: async (parent, args) => {
+      const movieComment = await MovieComment.create(args);
+      return movieComment;
+    },
+
+    addBookComment: async (parent, args) => {
+      const bookComment = await BookComment.create(args);
+      return bookComment;
     },
 
     login: async (parent, { email, password }) => {

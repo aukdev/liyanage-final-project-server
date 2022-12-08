@@ -7,6 +7,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const axios = require("axios");
 const { Movie } = require("./models");
+const bookApiSeeds = require("./seeds/googleBook");
 
 //db connection
 const db = require("./config/connection");
@@ -62,6 +63,8 @@ db.once("open", () => {
     console.log(`API server running on port ${PORT}!`);
 
     // runSeeds();
+    bookApiSeeds();
+
     axios
       .request(options)
       .then(async (response) => {
@@ -95,8 +98,11 @@ db.once("open", () => {
                 movieId: ele.id,
               };
             });
-            const data = await Movie.create(correctDataForDb);
-            console.log(data);
+
+            if (correctDataForDb) {
+              const data = await Movie.create(correctDataForDb);
+              console.log(data);
+            }
           }
         }
       })
